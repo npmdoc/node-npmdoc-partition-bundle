@@ -1,9 +1,14 @@
-# api documentation for  [partition-bundle (v2.5.0)](https://github.com/arian/partition-bundle)  [![npm package](https://img.shields.io/npm/v/npmdoc-partition-bundle.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-partition-bundle) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-partition-bundle.svg)](https://travis-ci.org/npmdoc/node-npmdoc-partition-bundle)
+# npmdoc-partition-bundle
+
+#### api documentation for  [partition-bundle (v2.5.0)](https://github.com/arian/partition-bundle)  [![npm package](https://img.shields.io/npm/v/npmdoc-partition-bundle.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-partition-bundle) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-partition-bundle.svg)](https://travis-ci.org/npmdoc/node-npmdoc-partition-bundle)
+
 #### A Browserify plugin to pack multiple related modules together and load modules on-demand
 
-[![NPM](https://nodei.co/npm/partition-bundle.png?downloads=true)](https://www.npmjs.com/package/partition-bundle)
+[![NPM](https://nodei.co/npm/partition-bundle.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/partition-bundle)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-partition-bundle/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-partition-bundle_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-partition-bundle/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-partition-bundle/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-partition-bundle/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-partition-bundle/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-partition-bundle/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-partition-bundle/build/screenCapture.npmPackageListing.svg)
 
@@ -57,13 +62,11 @@
     "main": "index.js",
     "maintainers": [
         {
-            "name": "arian",
-            "email": "stolwijk.arian@gmail.com"
+            "name": "arian"
         }
     ],
     "name": "partition-bundle",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/arian/partition-bundle.git"
@@ -77,124 +80,6 @@
     },
     "version": "2.5.0"
 }
-```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module partition-bundle](#apidoc.module.partition-bundle)
-1.  [function <span class="apidocSignatureSpan">partition-bundle.</span>parallel (array, fn)](#apidoc.element.partition-bundle.parallel)
-
-#### [module partition-bundle.parallel](#apidoc.module.partition-bundle.parallel)
-1.  [function <span class="apidocSignatureSpan">partition-bundle.</span>parallel (array, fn)](#apidoc.element.partition-bundle.parallel.parallel)
-1.  [function <span class="apidocSignatureSpan">partition-bundle.parallel.</span>errors (args)](#apidoc.element.partition-bundle.parallel.errors)
-
-
-
-# <a name="apidoc.module.partition-bundle"></a>[module partition-bundle](#apidoc.module.partition-bundle)
-
-#### <a name="apidoc.element.partition-bundle.parallel"></a>[function <span class="apidocSignatureSpan">partition-bundle.</span>parallel (array, fn)](#apidoc.element.partition-bundle.parallel)
-- description and source-code
-```javascript
-function parallel(array, fn) {
-
-  var length = array.length;
-  var results = new Array(length);
-  var loaded = 0;
-
-  function wrap(fn, index) {
-    fn(function callback(err) {
-      results[index] = arguments;
-      loaded++;
-      ready();
-    });
-  }
-
-  function ready() {
-    if (loaded >= length) {
-      fn.apply(null, results);
-    }
-  }
-
-  ready();
-
-  fold(array, 0, wrap);
-
-}
-```
-- example usage
-```shell
-n/a
-```
-
-
-
-# <a name="apidoc.module.partition-bundle.parallel"></a>[module partition-bundle.parallel](#apidoc.module.partition-bundle.parallel)
-
-#### <a name="apidoc.element.partition-bundle.parallel.parallel"></a>[function <span class="apidocSignatureSpan">partition-bundle.</span>parallel (array, fn)](#apidoc.element.partition-bundle.parallel.parallel)
-- description and source-code
-```javascript
-function parallel(array, fn) {
-
-  var length = array.length;
-  var results = new Array(length);
-  var loaded = 0;
-
-  function wrap(fn, index) {
-    fn(function callback(err) {
-      results[index] = arguments;
-      loaded++;
-      ready();
-    });
-  }
-
-  function ready() {
-    if (loaded >= length) {
-      fn.apply(null, results);
-    }
-  }
-
-  ready();
-
-  fold(array, 0, wrap);
-
-}
-```
-- example usage
-```shell
-n/a
-```
-
-#### <a name="apidoc.element.partition-bundle.parallel.errors"></a>[function <span class="apidocSignatureSpan">partition-bundle.parallel.</span>errors (args)](#apidoc.element.partition-bundle.parallel.errors)
-- description and source-code
-```javascript
-function errors(args) {
-  return fold(args, [], function(val, key, errors) {
-    if (val[0]) errors.push(val[0]);
-    return errors;
-  });
-}
-```
-- example usage
-```shell
-...
-    else loading[file] = [cb];
-  });
-  return tasks;
-});
-
-// when all files are loaded, the modules can be required
-parallel(loadTasks, function() {
-  var errors = parallel.errors(arguments);
-  if (errors.length) {
-    errFn(errors[0]);
-  } else {
-    __requireAll(deps, function(errors, exports) {
-      if (errors.length) errFn(errors[0]);
-      else fn.apply(null, exports);
-    });
-...
 ```
 
 
