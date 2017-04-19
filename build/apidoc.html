@@ -63,6 +63,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.partition-bundle.partition-bundle">
+            function <span class="apidocSignatureSpan"></span>partition-bundle
+            <span class="apidocSignatureSpan">(b, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.partition-bundle.parallel">
             function <span class="apidocSignatureSpan">partition-bundle.</span>parallel
             <span class="apidocSignatureSpan">(array, fn)</span>
@@ -98,6 +107,55 @@
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.partition-bundle" id="apidoc.module.partition-bundle">module partition-bundle</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.partition-bundle.partition-bundle" id="apidoc.element.partition-bundle.partition-bundle">
+        function <span class="apidocSignatureSpan"></span>partition-bundle
+        <span class="apidocSignatureSpan">(b, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function partitionBundle(b, opts) {
+
+  opts = normalizeOptions(b, opts);
+  var shortIDLabels = opts.shortIDLabels = {};
+
+  var rOpts = {
+    basedir: opts.mapDir,
+    extensions: b._extensions
+  };
+
+  // require the modules from the map
+  forOwn(opts.map, function(modules, file) {
+    modules.forEach(function(mod, i) {
+      if (typeof mod === &#x27;string&#x27;) {
+        mod = {
+          require: mod,
+          expose: mod
+        };
+      }
+
+      var id = bresolve.sync(mod.require, rOpts);
+      shortIDLabels[id] = mod.expose;
+      modules[i] = id;
+      b.require(id, {entry: true});
+    });
+  });
+
+  // on reset, a new pipeline is installed, make sure we
+  // alter this one new one with our events too.
+  b.on(&#x27;reset&#x27;, function() {
+    installBundlePipeline(b.pipeline, opts);
+  });
+
+  // install initial pipeline
+  installBundlePipeline(b.pipeline, opts);
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
     <h2>
